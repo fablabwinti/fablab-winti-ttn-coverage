@@ -8,7 +8,7 @@ import webpackMiddleware from 'webpack-dev-middleware'
 import webpackHotMiddleware from 'webpack-hot-middleware'
 import webpackConfig from '../webpack.config.dev'
 
-const port = process.env.PORT || 3300
+const port = process.env.PORT || 80
 let app = express()
 
 // express middleware
