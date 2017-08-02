@@ -1,24 +1,20 @@
 const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
+const dbConfig = require('./config').dbConfig;
+
+console.log('-----------------------------------------')
+console.log(dbConfig)
 
 const port = process.env.PORT || 3001
 
-var server = '...';
-var dbPort = '...';
-var database = '...';
-var user = '...';
-var password = '...';
-
-const url = 'mongodb://' + user + ':' + password + '@' + server + ':' + dbPort + '/' + database + '?replicaSet=eusbg1'
+const url = 'mongodb://' + dbConfig.user + ':' + dbConfig.password + '@' + dbConfig.server + ':' + dbConfig.port + '/' + dbConfig.database + '?replicaSet=eusbg1'
 const db = require('monk')(url)
 const gpsLogs = db.get('gps-logs')
 
 app.use(express.static('build'))
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(bodyParser.json())
-
-
 
 function toFloat(b_data) {
   var buf = new ArrayBuffer(4)
@@ -93,5 +89,5 @@ ttnRouter.route('/ttn-message').post(function(req, res) {
 app.use('/api', ttnRouter);
 
 app.listen(port, function () {
-  console.log('Example app listening on port ' + port)
+  console.log('app listening on port ' + port)
 })

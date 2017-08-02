@@ -14,13 +14,8 @@ export const loadGpsLogs = () => {
 }
 
 export const gpsLogAdded = (log) => {
-
   return {
-
     type: 'WS_GPS_LOG_ADDED',
-
     payload: log
-
   }
-
 }

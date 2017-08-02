@@ -1,15 +1,16 @@
 var gulp = require( 'gulp' );
 var gutil = require( 'gulp-util' );
 var ftp = require( 'vinyl-ftp' );
+var config = require('./config').ftpConfig;
  
 gulp.task( 'deploy', function () {
  
   var conn = ftp.create( {
-    host:     'fablab-winti-ttn-coverage.ftp.evennode.com',
-    user:     '...',
-    password: '...',
+    host: config.host,
+    user: config.user,
+    password: config.bassword,
     parallel: 10,
-    log:      gutil.log
+    log: gutil.log
   });
  
   var globs = [

@@ -34,5 +34,12 @@
     "build": "npm run build-css && react-scripts build",
     "deploy": "npm run build && gulp deploy",
     "test": "react-scripts test --env=jsdom"
+  },
+  "proxy": {
+    "/api": {
+      "target": "http://fablab-winti-ttn-coverage.eu-4.evennode.com/",
+      "changeOrigin": true,
+      "ws": true
+    }
   }
 }
