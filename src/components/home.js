@@ -1,56 +1,28 @@
 
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { bindActionContainers } from 'redux'
+import { connect } from 'react-redux'
 import { Map } from './map'
 
-export class Home extends Component {
+class HomeComponent extends Component {
+
+  handleOnGpsLogMarkerClick(e) {
+    alert(e.deviceId);
+  }
+
   render() {
     return (
-      <div>
-        <div className="container-fluid row">
-          <div className="col-lg-8">
-            <Map />
-          </div>
-          <div className="col-lg-4">
-           <table className="table table-sm table-striped">
-             <colgroup>
-              <col style={{width: '40%'}} />
-              <col style={{width: '60%'}} />
-             </colgroup>
-            <tbody>
-              <tr>
-                <th scope="row">deviceId</th>
-                <td>Mark</td>
-              </tr>
-              <tr>
-                <th scope="row">time</th>
-                <td>Jacob</td>
-              </tr>
-              <tr>
-                <th scope="row">frequency</th>
-                <td>Larry</td>
-              </tr>
-              <tr>
-                <th scope="row">modulation</th>
-                <td>Larry</td>
-              </tr>
-              <tr>
-                <th scope="row">data_rate</th>
-                <td>Larry</td>
-              </tr>
-              <tr>
-                <th scope="row">bit_rate</th>
-                <td>Larry</td>
-              </tr>
-              <tr>
-                <th scope="row">coding_rate</th>
-                <td>Larry</td>
-              </tr>
-            </tbody>
-          </table>
-          </div>
-        </div>
+      <div className="map-container">
+        <Map gpsLogs={this.props.gpsLogs} onGpsLogMarkerClick={this.handleOnGpsLogMarkerClick.bind(this)} />
       </div>
     );
   }
 }
 
+function mapStateToProps(state) {
+  return {
+    gpsLogs: state.gpsLogs
+  }
+}
+
+export const Home = connect(mapStateToProps)(HomeComponent);

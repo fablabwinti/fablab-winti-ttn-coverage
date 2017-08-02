@@ -1,17 +1,23 @@
 @import "custom";
+html{
+  height: 100%;
+}
+body {
+  min-height: 100%;
+}
 
 .app-header {
   img.fablab-logo {
-    margin-top: -6px;
-    margin-bottom: -6px;
-    height: 52px;
-    width: 52px;
+    margin-top: -7px;
+    margin-bottom: -7px;
+    height: 50px;
+    width: 50px;
     margin-right: 12px;
   }
 }
 
 .app-content {
-  margin-top: 56px;
+  //margin-top: 56px;
 }
 
 .app-footer {
@@ -28,4 +34,11 @@
     float: left;
     margin-right: 18px;
   }
+}
+.map-container {
+  position: absolute;
+  top: 66px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
 }

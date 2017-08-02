@@ -2,6 +2,8 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const app = express()
 const dbConfig = require('./config').dbConfig;
+const ttnConfig = require('./config').ttnConfig;
+
 
 console.log('-----------------------------------------')
 console.log(dbConfig)
@@ -36,7 +38,13 @@ function toInt16(b_data) {
 let ttnRouter = express.Router()
 
 ttnRouter.route('/gps-logs').get(function(req, res) {
-  gpsLogs.find({},{'location':1}).then((docs) => {
+  gpsLogs.find({},{'deviceId': 1, 'time': 1, 'location': 1}).then((docs) => {
+    res.json(docs)
+  })
+})
+
+ttnRouter.route('/logs-map-data').get(function(req, res) {
+  gpsLogs.find({},{'location': 1}).then((docs) => {
     res.json(docs)
   })
 })
@@ -49,14 +57,16 @@ ttnRouter.route('/gps-logs/:id').get(function(req, res) {
 
 ttnRouter.route('/ttn-message').post(function(req, res) {
 
-  if(req.headers.authorization !== 'd5228417c6b840d929265970ba1753b5ed3eaed45a2cc3794a568ae5f5c8b6fd4cf1') {
-    res.sendStatus(404)
+  let msg = req.body;
+
+  let rawData = Buffer.from(msg.payload_raw, 'base64');
+  let msgType = rawData[0];
+
+  if(msgType !== 1) {
+    res.sendStatus(200)
     return
   }
 
-  let msg = req.body;
-  let rawData = Buffer.from(msg.payload_raw, 'base64');
-  let msgType = rawData[0];
   let lat = toFloat(rawData.slice(1, 5));
   let lon = toFloat(rawData.slice(5, 9));
   let alt = toInt16(rawData.slice(9, 11));
@@ -76,6 +86,11 @@ ttnRouter.route('/ttn-message').post(function(req, res) {
     },
     gateways: msg.metadata.gateways
   };
+
+  if(req.headers.authorization !== ttnConfig.authorization) {
+    res.sendStatus(404)
+    return
+  }
 
   gpsLogs.insert(gpsLogData).then(function(data) {
     res.json({ message: 'OK' })

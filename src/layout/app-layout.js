@@ -11,7 +11,6 @@ export class AppLayout extends Component {
         <div className="app-content">
         {this.props.children}
         </div>
-        <AppFooter />
       </div>
     );
   }

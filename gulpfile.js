@@ -5,10 +5,12 @@ var config = require('./config').ftpConfig;
  
 gulp.task( 'deploy', function () {
  
+  console.log(config);
+  
   var conn = ftp.create( {
     host: config.host,
     user: config.user,
-    password: config.bassword,
+    password: config.password,
     parallel: 10,
     log: gutil.log
   });
@@ -16,6 +18,7 @@ gulp.task( 'deploy', function () {
   var globs = [
     'build/**',
     'app.js',
+    'config.js',
     'package.json'
   ];
 

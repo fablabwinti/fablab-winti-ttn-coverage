@@ -12,7 +12,12 @@ const dbConfig = {
   password: '...'
 }
 
+const ttnConfig = {
+  authorization: '...'
+}
+
 module.exports = {
   ftpConfig,
-  dbConfig
+  dbConfig,
+  ttnConfig
 }
