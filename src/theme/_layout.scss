@@ -37,8 +37,17 @@ body {
 }
 .map-container {
   position: absolute;
-  top: 66px;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
+  top: 56px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+.gps-log-details {
+  display: none;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  right: 0;
+  background-color: rgba(33, 35, 37, .5);
 }

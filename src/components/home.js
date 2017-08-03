@@ -7,13 +7,15 @@ import { Map } from './map'
 class HomeComponent extends Component {
 
   handleOnGpsLogMarkerClick(e) {
-    alert(e.deviceId);
+    //alert(e.deviceId);
   }
 
   render() {
     return (
       <div className="map-container">
         <Map gpsLogs={this.props.gpsLogs} onGpsLogMarkerClick={this.handleOnGpsLogMarkerClick.bind(this)} />
+        <div className="gps-log-details">
+        </div>
       </div>
     );
   }

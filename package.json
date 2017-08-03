@@ -40,6 +40,11 @@
       "target": "http://fablab-winti-ttn-coverage.eu-4.evennode.com/",
       "changeOrigin": true,
       "ws": true
+    },
+     "/ws": {
+      "target": "http://fablab-winti-ttn-coverage.eu-4.evennode.com/",
+      "changeOrigin": true,
+      "ws": true
     }
   }
 }
