@@ -32,21 +32,16 @@ pycom.heartbeat(False)
 lora = LoRa(mode=LoRa.LORAWAN)
 
 
-#gps-tracker-001 : 00 7D 9B 0E 60 33 24 03
-#gps-tracker-002 : 00 C4 35 FB 84 60 DB E0
-#gps-tracker-003 : 00 AF CA 24 11 3A B6 3A
-#gps-tracker-004 : 00 8B 10 ED EB B2 11 A3
-#gps-tracker-005 : 00 7C 16 4A 96 8F 3D CB
 
 # create an OTA authentication params
-dev_eui = binascii.unhexlify('00 7D 9B 0E 60 33 24 03'.replace(' ','')) # these settings can be found from TTN
-app_eui = binascii.unhexlify('70 B3 D5 7E F0 00 62 1E'.replace(' ','')) # these settings can be found from TTN
-app_key = binascii.unhexlify('61 7D 22 55 B1 20 0C 0C 9D FB 1F 8B 18 EF 90 59'.replace(' ','')) # these settings can be found from TTN
+dev_eui = binascii.unhexlify('...'.replace(' ','')) # these settings can be found from TTN
+app_eui = binascii.unhexlify('...'.replace(' ','')) # these settings can be found from TTN
+app_key = binascii.unhexlify('...'.replace(' ','')) # these settings can be found from TTN
 
 # set the 3 default channels to the same frequency (must be before sending the OTAA join request)
 lora.add_channel(0, frequency=868100000, dr_min=0, dr_max=5)
-lora.add_channel(1, frequency=868100000, dr_min=0, dr_max=5)
-lora.add_channel(2, frequency=868100000, dr_min=0, dr_max=5)
+lora.add_channel(1, frequency=86810000, dr_min=0, dr_max=5)
+lora.add_channel(2, frequency=86810000, dr_min=0, dr_max=5)
 
 # join a network using OTAA
 lora.join(activation=LoRa.OTAA, auth=(dev_eui,  app_eui, app_key), timeout=0)
