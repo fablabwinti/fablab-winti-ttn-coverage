@@ -4,10 +4,6 @@ const app = express()
 const dbConfig = require('./config').dbConfig;
 const ttnConfig = require('./config').ttnConfig;
 
-
-console.log('-----------------------------------------')
-console.log(dbConfig)
-
 const port = process.env.PORT || 3001
 
 const url = 'mongodb://' + dbConfig.user + ':' + dbConfig.password + '@' + dbConfig.server + ':' + dbConfig.port + '/' + dbConfig.database + '?replicaSet=eusbg1'
@@ -43,17 +39,25 @@ ttnRouter.route('/gps-logs').get(function(req, res) {
   })
 })
 
-ttnRouter.route('/logs-map-data').get(function(req, res) {
-  gpsLogs.find({},{'location': 1}).then((docs) => {
+/*
+ttnRouter.route('/gps-logs-full').get(function(req, res) {
+  gpsLogs.find().then((docs) => {
     res.json(docs)
   })
 })
+ttnRouter.route('/gps-cleanup').get(function(req, res) {
+  gpsLogs.remove({'location.latitude': 0, 'location.longitude': 0}).then((d) => {
+    res.json({ status: OK})
+  })
+})
+*/
 
 ttnRouter.route('/gps-logs/:id').get(function(req, res) {
   gpsLogs.findOne({_id: req.params.id}).then((docs) => {
     res.json(docs)
   })
 })
+
 
 ttnRouter.route('/ttn-message').post(function(req, res) {
 

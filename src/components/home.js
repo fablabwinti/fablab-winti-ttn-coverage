@@ -3,17 +3,28 @@ import React, { Component } from 'react'
 import { bindActionContainers } from 'redux'
 import { connect } from 'react-redux'
 import { Map } from './map'
+import { loadGpsLogDetails, clearGpsLogDetails } from '../actions'
 
 class HomeComponent extends Component {
 
-  handleOnGpsLogMarkerClick(e) {
-    //alert(e.deviceId);
+  handleOnGpsLogMarkerClick(logItem) {
+    //alert(e._id)
+    console.log(this.props)
+    this.props.dispatch(loadGpsLogDetails(logItem))
+  }
+
+  handleOnMapClicked() {
+    this.props.dispatch(clearGpsLogDetails())
   }
 
   render() {
     return (
       <div className="map-container">
-        <Map gpsLogs={this.props.gpsLogs} onGpsLogMarkerClick={this.handleOnGpsLogMarkerClick.bind(this)} />
+        <Map gpsLogs={this.props.gpsLogs}  
+          gpsLogDetails={this.props.gpsLogDetails} 
+          onGpsLogMarkerClick={this.handleOnGpsLogMarkerClick.bind(this)}
+          onMapClick={this.handleOnMapClicked.bind(this)}
+        />
         <div className="gps-log-details">
         </div>
       </div>
@@ -23,7 +34,8 @@ class HomeComponent extends Component {
 
 function mapStateToProps(state) {
   return {
-    gpsLogs: state.gpsLogs
+    gpsLogs: state.gpsLogs,
+    gpsLogDetails: state.gpsLogDetails
   }
 }
 
