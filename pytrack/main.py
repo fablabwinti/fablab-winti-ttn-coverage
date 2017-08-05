@@ -17,8 +17,8 @@ def blink(color, timeout, count):
         pycom.rgbled(0x000000)
         time.sleep(timeout / 2)
 
-def send(socket, data):
-    pycom.rgbled(0x007f00)
+def send(socket, data, color = 0x007f00):
+    pycom.rgbled(color)
     socket.setblocking(True)
     socket.send(bytes(data))
     socket.setblocking(False)
@@ -34,9 +34,9 @@ lora = LoRa(mode=LoRa.LORAWAN)
 
 
 # create an OTA authentication params
-dev_eui = binascii.unhexlify('...'.replace(' ','')) # these settings can be found from TTN
-app_eui = binascii.unhexlify('...'.replace(' ','')) # these settings can be found from TTN
-app_key = binascii.unhexlify('...'.replace(' ','')) # these settings can be found from TTN
+dev_eui = binascii.unhexlify('....'.replace(' ','')) # these settings can be found from TTN
+app_eui = binascii.unhexlify('....'.replace(' ','')) # these settings can be found from TTN
+app_key = binascii.unhexlify('....'.replace(' ','')) # these settings can be found from TTN
 
 # set the 3 default channels to the same frequency (must be before sending the OTAA join request)
 lora.add_channel(0, frequency=868100000, dr_min=0, dr_max=5)
@@ -66,10 +66,14 @@ s.setsockopt(socket.SOL_LORA, socket.SO_DR, 5)
 s.setblocking(False)
 
 py = Pytrack()
-l76 = L76GNSS(py, timeout=45) # GSP timeout set to 120 seconds
+l76 = L76GNSS(py, timeout=40) # GSP timeout set to 120 seconds
 
 last_lat = 0.0
 last_lon = 0.0
+
+msg_log = None
+msg_count = 0
+msg_log_length = 5
 
 nomsg_count = 0
 
@@ -79,7 +83,6 @@ while True:
     lat, lon = l76.coordinates();
 
     if lat != None and  lon != None:
-
 
         if lat != last_lat and lon != last_lon:
 
@@ -95,10 +98,24 @@ while True:
 
             send(s, bytes(data))
 
+            if msg_count == 0:
+                msg_log = [10, msg_log_length]
+
+            msg_log = msg_log + lat_b + lon_b
+            msg_count = msg_count + 1
+            if msg_count == msg_log_length:
+                time.sleep(30)
+                send(s, bytes(msg_log), color=0x00007f)
+                msg_count = 0
+                msg_log = None
+                time.sleep(15)
+            else:
+                time.sleep(45)
+
             last_lat = lat
             last_lon = lon
+
             nomsg_count = 0
-            time.sleep(60)
         else:
             print('same coordinates')
             nomsg_count = nomsg_count + 1

@@ -4,10 +4,7 @@ import { withGoogleMap, GoogleMap, Marker, Polyline, OverlayView } from 'react-g
 import mapStyles from "../theme/map/map2.json";
 
 var gpsMarker = require('../theme/images/gps-marker.png');
-
-function getMarkerOffset(width, height) {
-  return { x: -(width / 2), y: -(height / 2) };
-}
+var deadspotMarker = require('../theme/images/deadspot-marker.png');
 
 const SimpleMap = withGoogleMap(props => (
   <GoogleMap
@@ -17,13 +14,20 @@ const SimpleMap = withGoogleMap(props => (
     defaultOptions={{ styles: mapStyles }}
     onClick={props.onMapClick}
   >
-    {props.gpsLogs.filter(gpsLog => gpsLog.location.latitude !== 0).map((gpsLog, index) => (
+    {props.gpsLogs.map((gpsLog, index) => (
       <Marker
-        getPixelPositionOffset={getMarkerOffset}
         key={gpsLog._id}
         icon={gpsMarker}
         position={{lat: gpsLog.location.latitude, lng: gpsLog.location.longitude}}
         onClick={() => props.onMarkerClick(index)}
+      />
+    ))}
+    
+    {props.deadSpots.map((deadSpot, index) => (
+      <Marker
+        key={deadSpot._id}
+        icon={deadspotMarker}
+        position={{lat: deadSpot.location.latitude, lng: deadSpot.location.longitude}}
       />
     ))}
 
@@ -78,6 +82,7 @@ export class Map extends Component {
         gpsLogs={this.props.gpsLogs}
         overlayPosition={{ lat: 47.500070, lng: 8.724097 }}
         logDetails={this.props.gpsLogDetails.details}
+        deadSpots={this.props.deadSpots}
         showOverlay={this._showOverlay}
       />
     );

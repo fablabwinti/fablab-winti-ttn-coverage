@@ -4,10 +4,11 @@ import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux'
 import { App } from './app'
 import './theme/styles.css'
-import { loadGpsLogs } from './actions'
+import { loadGpsLogs, loadDeadSpots } from './actions'
 
 import store from './reducers'
 store.dispatch(loadGpsLogs());
+store.dispatch(loadDeadSpots());
 
 ReactDOM.render(
   <Provider store={store}>

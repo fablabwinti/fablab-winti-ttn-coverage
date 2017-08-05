@@ -21,7 +21,8 @@ class HomeComponent extends Component {
     return (
       <div className="map-container">
         <Map gpsLogs={this.props.gpsLogs}  
-          gpsLogDetails={this.props.gpsLogDetails} 
+          gpsLogDetails={this.props.gpsLogDetails}
+          deadSpots={this.props.deadSpots}
           onGpsLogMarkerClick={this.handleOnGpsLogMarkerClick.bind(this)}
           onMapClick={this.handleOnMapClicked.bind(this)}
         />
@@ -35,7 +36,8 @@ class HomeComponent extends Component {
 function mapStateToProps(state) {
   return {
     gpsLogs: state.gpsLogs,
-    gpsLogDetails: state.gpsLogDetails
+    gpsLogDetails: state.gpsLogDetails,
+    deadSpots: state.deadSpots
   }
 }
 

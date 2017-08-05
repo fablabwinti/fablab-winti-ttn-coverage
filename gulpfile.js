@@ -11,7 +11,7 @@ gulp.task( 'deploy', function () {
     host: config.host,
     user: config.user,
     password: config.password,
-    parallel: 10,
+    parallel: 3,
     log: gutil.log
   });
  
@@ -22,7 +22,10 @@ gulp.task( 'deploy', function () {
     'package.json'
   ];
 
-  return gulp.src( globs, { base: '.', buffer: false } )
-    .pipe( conn.dest( '/' ) );
+  conn.delete('build', function() {
+    return gulp.src( globs, { base: '.', buffer: false } )
+      .pipe( conn.dest( '/' ) );
+  })
+
  
 });

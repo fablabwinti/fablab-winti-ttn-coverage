@@ -2,6 +2,7 @@ import { createStore, combineReducers, applyMiddleware, compose } from 'redux'
 import thunk from 'redux-thunk'
 import promise from 'redux-promise-middleware'
 import gpsLogsReducer from './gps-logs-reducer'
+import deadSpotsReducer from './dead-spots-reducer'
 import gpsLogDetailsReducer from './gps-log-details-reducer'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -13,7 +14,8 @@ const enhancer = composeEnhancers(
 export default createStore(
   combineReducers({
     gpsLogs: gpsLogsReducer,
-    gpsLogDetails: gpsLogDetailsReducer
+    gpsLogDetails: gpsLogDetailsReducer,
+    deadSpots: deadSpotsReducer
   }),
   {},
   enhancer
