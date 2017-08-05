@@ -113,15 +113,42 @@ ttnRouter.route('/ttn-message').post(function(req, res) {
       break
     }
 
-    case 10: {
-      console.log('msg type 10', msg.payload_raw)
-      let msgLength = rawData[1];
+    case 2: {
+      console.log('msg type 2', msg.payload_raw)
+
+      let lat = toFloat(rawData.slice(1, 5))
+      let lon = toFloat(rawData.slice(5, 9))
+      let alt = toInt16(rawData.slice(9, 11))
+
+      let gpsLogData = {
+        deviceId: msg.dev_id,
+        time: msg.metadata.time,
+        frequency: msg.metadata.frequency,
+        modulation: msg.metadata.modulation,
+        data_rate: msg.metadata.data_rate,
+        bit_rate: msg.metadata.bit_rate,
+        coding_rate: msg.metadata.coding_rate,
+        location: {
+          longitude: lon,
+          latitude: lat,
+          altitude: alt
+        },
+        gateways: msg.metadata.gateways
+      }
+      
+      gpsLogs.insert(gpsLogData).then(function(data) {
+        console.log('new log added')
+      }).catch(err => {
+        console.error(err)
+      })
+
+      let msgLength = rawData[11];
       for(let i = 0; i < msgLength; i++) {
         
         let msgOffset = i * 8;
 
-        let lat = toFloat(rawData.slice(2 + msgOffset, 6 + msgOffset))
-        let lon = toFloat(rawData.slice(6 + msgOffset, 10 + msgOffset))
+        let lat = toFloat(rawData.slice(12 + msgOffset, 16 + msgOffset))
+        let lon = toFloat(rawData.slice(16 + msgOffset, 20 + msgOffset))
 
         gpsLogs.findOne({'location.latitude': lat, 'location.longitude': lon}).then((docs) => {
           if(!docs) {
