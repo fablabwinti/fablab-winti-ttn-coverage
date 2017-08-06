@@ -31,9 +31,9 @@ pycom.heartbeat(False)
 lora = LoRa(mode=LoRa.LORAWAN)
 
 # create an OTA authentication params
-dev_eui = binascii.unhexlify('..') # these settings can be found from TTN
-app_eui = binascii.unhexlify('..') # these settings can be found from TTN
-app_key = binascii.unhexlify('..') # these settings can be found from TTN
+dev_eui = binascii.unhexlify('...') # these settings can be found from TTN
+app_eui = binascii.unhexlify('...') # these settings can be found from TTN
+app_key = binascii.unhexlify('...') # these settings can be found from TTN
 
 # set the 3 default channels to the same frequency (must be before sending the OTAA join request)
 lora.add_channel(0, frequency=868100000, dr_min=0, dr_max=5)
@@ -67,7 +67,7 @@ l76 = L76GNSS(py, timeout=30) # GSP timeout set to 120 seconds
 
 last_lat = 0.0
 last_lon = 0.0
-data_log_size = 4
+data_log_size = 8
 
 data_log = []
 
