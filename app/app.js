@@ -35,7 +35,32 @@ function toInt16(b_data) {
 let ttnRouter = express.Router()
 
 ttnRouter.route('/gps-logs').get(function(req, res) {
-  gpsLogs.find({},{'deviceId': 1, 'time': 1, 'location': 1}).then((docs) => {
+
+  var deviceId = req.query.dev
+  var gateway = req.query.gw
+  var timeBefore = req.query.ltt
+  var timeAfter = req.query.gtt
+  var gatewayCount = req.query.gwc
+
+  filter = {};
+
+  if(deviceId) {
+    filter['deviceId'] = deviceId;
+  }
+  if(gateway) {
+    
+    filter['gateways'] = { $elemMatch: { gtw_id: gateway } };
+  }
+
+  console.log(filter)
+
+  /*
+  filter = {
+    gateways: { $elemMatch: { gtw_id: "eui-b827ebfffe0386f0" } }
+  }
+  */
+
+  gpsLogs.find(filter,{'deviceId': 1, 'time': 1, 'location': 1}).then((docs) => {
     res.json(docs)
   })
 })
@@ -46,12 +71,14 @@ ttnRouter.route('/gps-logs-full').get(function(req, res) {
     res.json(docs)
   })
 })
+*/
+
 ttnRouter.route('/gps-cleanup').get(function(req, res) {
   gpsLogs.remove({'location.latitude': 0, 'location.longitude': 0}).then((d) => {
     res.json({ status: OK})
   })
 })
-*/
+
 
 ttnRouter.route('/gps-logs/:id').get(function(req, res) {
   gpsLogs.findOne({_id: req.params.id}).then((docs) => {
