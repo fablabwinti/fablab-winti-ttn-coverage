@@ -69,7 +69,7 @@ s.setsockopt(socket.SOL_LORA, socket.SO_DR, 5)
 s.setblocking(False)
 
 py = Pytrack()
-l76 = L76GNSS(py, timeout=30) # GSP timeout set to 120 seconds
+l76 = L76GNSS(py, timeout=30) # GSP timeout set to 30 seconds
 
 last_lat = 0.0
 last_lon = 0.0
