@@ -31,15 +31,10 @@ pycom.heartbeat(False)
 lora = LoRa(mode=LoRa.LORAWAN)
 
 # create an OTA authentication params
-<<<<<<< HEAD
-dev_eui = binascii.unhexlify('007D9B0E60332403') # these settings can be found from TTN
-app_eui = binascii.unhexlify('70B3D57EF000621E') # these settings can be found from TTN
-app_key = binascii.unhexlify('617D2255B1200C0C9DFB1F8B18EF9059') # these settings can be found from TTN
-=======
 dev_eui = binascii.unhexlify('...') # these settings can be found from TTN
 app_eui = binascii.unhexlify('...') # these settings can be found from TTN
 app_key = binascii.unhexlify('...') # these settings can be found from TTN
->>>>>>> e2fa7fe704854b47fc58bf5d14e3f9205db986b1
+
 
 # set the 3 default channels to the same frequency (must be before sending the OTAA join request)
 lora.add_channel(0, frequency=868100000, dr_min=0, dr_max=5)
@@ -81,9 +76,7 @@ while True:
 
     print('read gps data')
     lat, lon = l76.coordinates();
-    #lat = 48.12345678
-    #lon = 8.12345678
-
+   
     if lat != None and  lon != None:
 
         if True or lat != last_lat and lon != last_lon:
@@ -101,7 +94,6 @@ while True:
                 data = data + list(struct.pack("!f", li[0])) + list(struct.pack("!f", li[1]))
 
             #print('send msg')
-            #print(data)
 
             send(s, bytes(data))
 
