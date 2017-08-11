@@ -11,7 +11,7 @@ const SimpleMap = withGoogleMap(props => (
     ref={props.onMapLoad}
     defaultZoom={14}
     defaultCenter={{ lat: 47.500070, lng: 8.724097 }}
-    defaultOptions={{ styles: mapStyles }}
+    defaultOptions={{ styles: mapStyles, mapTypeControl: false }}
     onClick={props.onMapClick}
   >
     {props.gpsLogs.map((gpsLog, index) => (
