@@ -1,7 +1,7 @@
 const ftpConfig = {
   host:     'fablab-winti-ttn-coverage.ftp.evennode.com',
   user:     'fablab-winti-ttn-coverage_540f1',
-  password: 'fabMin0314'
+  password: ''
 }
 
 const dbConfig = {
@@ -9,7 +9,7 @@ const dbConfig = {
   port: '27017',
   database: '4f5f7507de3990630a967206ab8ffbb3',
   user: '4f5f7507de3990630a967206ab8ffbb3',
-  password: 'fabMin0314'
+  password: ''
 }
 
 const ttnConfig = {
